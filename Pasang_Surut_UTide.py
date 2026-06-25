@@ -27,7 +27,7 @@ uploaded_file = st.file_uploader("Pilih file Excel", type=["xlsx"])
 latitude = st.number_input("Masukkan nilai latitude lokasi pengamatan (dalam derajat desimal):", 
                            min_value=-90.0, max_value=90.0, value=0.000000, format="%.6f")
 
-st.markdown("### Pilih Rentang Prediksi Pasang Surut")
+st.markdown("###Rentang Prediksi Pasang Surut")
 
 interval_options = {
     "6 Jam": "6H",
@@ -39,15 +39,15 @@ interval_options = {
 interval_label = st.selectbox("Pilih Interval Prediksi", list(interval_options.keys()), index=1)
 interval = interval_options[interval_label]
 
-start_pred = st.date_input("Tanggal Mulai", datetime(2025, 1, 1))
-end_pred = st.date_input("Tanggal Akhir", datetime(2025, 6, 30))
+start_pred = st.date_input("Mulai", datetime(2025, 1, 1))
+end_pred = st.date_input("Akhir", datetime(2025, 6, 30))
 
 
 
 if start_pred >= end_pred:
     st.error("Tanggal mulai harus lebih awal dari tanggal akhir.")
 
-run_analysis = st.button("Analisa Pasang Surut")
+run_analysis = st.button("Analisa")
 
 if uploaded_file is not None and run_analysis:
     df = pd.read_excel(uploaded_file)
@@ -77,7 +77,7 @@ if uploaded_file is not None and run_analysis:
         'Phase CI [°]': decompose_utide['g_ci']
     })
 
-    st.header("3. Tabel Komponen Harmonik")
+    st.header("3. Komponen Harmonik")
     st.dataframe(DatFrame_UTide.style.format({
         'Freq [cph]': '{:.4f}',
         'Amplitude [m]': '{:.4f}',
@@ -144,7 +144,7 @@ if uploaded_file is not None and run_analysis:
     - 1.50 < F ≤ 3.00 : Pasang surut campuran condong ke harian tunggal *(Mixed, Predominantly Diurnal)*  
     - F > 3.00 : Pasang surut harian tunggal *(Diurnal)*
     """)
-    st.header("5. Tabel Perhitungan Elevasi Penting")
+    st.header("5. Elevasi Penting")
     st.dataframe(df_elevasi.style.format({
         'Elevasi (m)': lambda x: f"{x:.2f}" if isinstance(x, (int,float)) else x
     }))
@@ -167,7 +167,7 @@ if uploaded_file is not None and run_analysis:
     st.header("Grafik Pasang Surut dengan Elevasi Penting")
     st.pyplot(fig_elevasi)
 
-    st.header("6. Prediksi Pasang Surut")
+    st.header("6. Hasil Prediksi")
     timepred_UTIDE = pd.date_range(start=start_pred, end=end_pred, freq=interval)
     tidepred_UTIDE = reconstruct(timepred_UTIDE, decompose_utide, verbose=True)
     h_out_predutide = tidepred_UTIDE.h
@@ -205,7 +205,7 @@ if uploaded_file is not None and run_analysis:
     with col2:
         st.pyplot(fig_residual)
 
-    st.header("7. Ringkasan Analisis")
+    st.header("7. Ringkasan")
     st.markdown(f"""
 - **Formzahl**: {Formzahl:.2f}  
 - **Jenis Pasang Surut**: {jenis_pasang_surut}  
@@ -217,7 +217,7 @@ if uploaded_file is not None and run_analysis:
 - **Tunggang Pasang**: {Tunggang_Pasang:.2f} m  
 """)
 
-    st.header("8. Ekspor Hasil")
+    st.header("8. Ekspor")
 
     def fig_to_bytes(fig):
         buf = io.BytesIO()
