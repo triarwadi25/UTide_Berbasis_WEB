@@ -240,5 +240,5 @@ if uploaded_file is not None and run_analysis:
 
 # Tanda tangan
 st.markdown("---")
-st.markdown("**by : Tri Arwadi modified ChatGPT and Blackbox**") 
+st.markdown("**by : Moh. Tri Arwadi modified ChatGPT and Blackbox**") 
 
