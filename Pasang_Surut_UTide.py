@@ -11,7 +11,7 @@ from datetime import datetime
 import io
 import zipfile
 
-st.set_page_config(page_title="Aplikasi Analisa Pasang Surut", page_icon="🌊")
+st.set_page_config(page_title="Aplikasi Analisa Pasang Surut - UTide", page_icon="🌊")
 st.title("🌊Aplikasi Analisa Pasang Surut")
 
 st.header("1. Upload Data")
@@ -28,8 +28,6 @@ latitude = st.number_input("Masukkan nilai latitude lokasi pengamatan (dalam der
                            min_value=-90.0, max_value=90.0, value=0.000000, format="%.6f")
 
 st.markdown("### Pilih Rentang Prediksi Pasang Surut")
-start_pred = st.date_input("Tanggal Mulai", datetime(2025, 1, 1))
-end_pred = st.date_input("Tanggal Akhir", datetime(2025, 6, 30))
 
 interval_options = {
     "6 Jam": "6H",
@@ -40,6 +38,10 @@ interval_options = {
 }
 interval_label = st.selectbox("Pilih Interval Prediksi", list(interval_options.keys()), index=1)
 interval = interval_options[interval_label]
+
+start_pred = st.date_input("Tanggal Mulai", datetime(2025, 1, 1))
+end_pred = st.date_input("Tanggal Akhir", datetime(2025, 6, 30))
+
 
 
 if start_pred >= end_pred:
